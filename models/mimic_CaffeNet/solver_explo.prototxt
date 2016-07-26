@@ -1,0 +1,14 @@
+net: "models/rfal_explo/train_val_explo.prototxt"
+test_iter: 110
+test_interval: 100
+base_lr: 0.001
+lr_policy: "step"
+gamma: 0.1
+stepsize: 100000
+display: 20
+max_iter: 500000
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 100000
+snapshot_prefix: "examples/explo_imagenet/dungeon5663_explo"
+solver_mode: GPU
