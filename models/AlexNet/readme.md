@@ -1,5 +1,5 @@
 
-# BVLC AlexNet Model -- 
+# BVLC AlexNet Model 
 ## adopted for autonomous exploration
 
 caffemodel: bvlc_alexnet.caffemodel
