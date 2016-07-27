@@ -29,7 +29,7 @@ layer {
   }
   data_param {
     source: "data/exploration/explo_val_lmdb"
-    batch_size: 128
+    batch_size: 512
     backend: LMDB
   }
 }

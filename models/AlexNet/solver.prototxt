@@ -1,5 +1,5 @@
 net: "DeepLearning_Exploration/models/AlexNet/train_val.prototxt"
-test_iter: 32
+test_iter: 14
 test_interval: 100
 base_lr: 0.01
 lr_policy: "step"
