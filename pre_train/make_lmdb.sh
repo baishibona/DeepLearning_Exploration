@@ -20,6 +20,7 @@ GLOG_logtostderr=1 $TOOLS/convert_imageset \
     --resize_height=$RESIZE_HEIGHT \
     --resize_width=$RESIZE_WIDTH \
     --shuffle \
+    --gray \
     $TRAIN_DATA_ROOT/ \
     $DATA/dungeon_train.txt \
     $EXAMPLE/explo_train_lmdb
@@ -31,6 +32,7 @@ GLOG_logtostderr=1 $TOOLS/convert_imageset \
     --resize_height=$RESIZE_HEIGHT \
     --resize_width=$RESIZE_WIDTH \
     --shuffle \
+    --gray \
     $VAL_DATA_ROOT \
     $DATA/dungeon_test.txt \
     $EXAMPLE/explo_val_lmdb

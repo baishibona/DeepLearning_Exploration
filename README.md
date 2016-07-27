@@ -1,9 +1,9 @@
 # Prototxt gathered from literature
 ## and some revisions by bona
 
-### AlexNet
+ AlexNet
+ 
+ VGG_CNN_S
 
-### VGG_CNN_S
-
-### ..
+ ..
 
