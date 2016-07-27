@@ -1,4 +1,4 @@
-net: "DeepLearning_Exploration/models/ResNet/explo_ResNet-50-train.prototxt"
+net: "DeepLearning_Exploration/models/ResNet/explo_ResNet_50_train.prototxt"
 test_iter: 14
 test_interval: 100
 base_lr: 0.001
