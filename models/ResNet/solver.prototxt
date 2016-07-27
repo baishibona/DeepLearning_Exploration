@@ -1,5 +1,5 @@
-net: "DeepLearning_Exploration/models/ResNet/train_val.prototxt"
-test_iter: 110
+net: "DeepLearning_Exploration/models/ResNet/explo_ResNet-50-train.prototxt"
+test_iter: 14
 test_interval: 100
 base_lr: 0.001
 lr_policy: "step"
