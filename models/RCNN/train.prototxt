@@ -240,7 +240,7 @@ layer {
 layer {
   name: "accuracy"
   type: "Accuracy"
-  bottom: "fc7"
+  bottom: "fc-rcnn"
   bottom: "label"
   top: "accuracy"
   include {
@@ -250,7 +250,7 @@ layer {
 layer {
   name: "loss"
   type: "SoftmaxWithLoss"
-  bottom: "fc7"
+  bottom: "fc-rcnn"
   bottom: "label"
   top: "loss"
 }
