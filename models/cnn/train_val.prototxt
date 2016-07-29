@@ -140,17 +140,17 @@ layer {
 }
 
 layer {
-  name: "relu3"
+  name: "relu2"
   type: "ReLU"
   bottom: "conv4"
-  top: "relu3"
+  top: "relu2"
 }
 
 # second cNN Net
 layer {
   name: "conv5"
   type: "Convolution"
-  bottom: "relu3"
+  bottom: "relu2"
   top: "conv5"
   param {
     lr_mult: 1
@@ -196,14 +196,14 @@ layer {
   }
 }
 layer {
-  name: "relu4"
+  name: "relu3"
   type: "ReLU"
   bottom: "conv6"
-  top: "relu4"
+  top: "relu3"
 }
 
 layer {
-  bottom: "relu4"
+  bottom: "relu3"
   top: "pool2"
   name: "pool2"
   type: "Pooling"
@@ -264,14 +264,14 @@ layer {
   }
 }
 layer {
-  name: "relu5"
+  name: "relu4"
   type: "ReLU"
   bottom: "conv8"
-  top: "relu5"
+  top: "relu4"
 }
 
 layer {
-  bottom: "relu5"
+  bottom: "relu4"
   top: "pool3"
   name: "pool3"
   type: "Pooling"
@@ -333,14 +333,14 @@ layer {
   }
 }
 layer {
-  name: "relu6"
+  name: "relu5"
   type: "ReLU"
   bottom: "conv10"
-  top: "relu6"
+  top: "relu5"
 }
 
 layer {
-  bottom: "relu6"
+  bottom: "relu5"
   top: "pool4"
   name: "pool4"
   type: "Pooling"
@@ -371,7 +371,7 @@ layer {
 }
 
 layer {
-  name: "relu5"
+  name: "relu6"
   type: "ReLU"
   bottom: "fc1"
   top: "fc1"
@@ -403,7 +403,7 @@ layer {
   }
 }
 layer {
-  name: "relu6"
+  name: "relu7"
   type: "ReLU"
   bottom: "fc2"
   top: "fc2"
