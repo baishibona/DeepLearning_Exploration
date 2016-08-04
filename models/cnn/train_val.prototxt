@@ -91,9 +91,21 @@ layer {
 }
 
 layer {
+  name: "norm1"
+  type: "LRN"
+  bottom: "conv2"
+  top: "norm1"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+
+layer {
   name: "conv3"
   type: "Convolution"
-  bottom: "conv2"
+  bottom: "norm1"
   top: "conv3"
   param {
     lr_mult: 1
@@ -146,11 +158,24 @@ layer {
   top: "relu2"
 }
 
+layer {
+  name: "norm2"
+  type: "LRN"
+  bottom: "relu2"
+  top: "norm2"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+
+
 # second cNN Net
 layer {
   name: "conv5"
   type: "Convolution"
-  bottom: "relu2"
+  bottom: "norm2"
   top: "conv5"
   param {
     lr_mult: 1
@@ -203,7 +228,19 @@ layer {
 }
 
 layer {
+  name: "norm3"
+  type: "LRN"
   bottom: "relu3"
+  top: "norm3"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+
+layer {
+  bottom: "norm3"
   top: "pool2"
   name: "pool2"
   type: "Pooling"
@@ -271,7 +308,19 @@ layer {
 }
 
 layer {
+  name: "norm4"
+  type: "LRN"
   bottom: "relu4"
+  top: "norm4"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+
+layer {
+  bottom: "norm4"
   top: "pool3"
   name: "pool3"
   type: "Pooling"
@@ -340,7 +389,19 @@ layer {
 }
 
 layer {
+  name: "norm5"
+  type: "LRN"
   bottom: "relu5"
+  top: "norm5"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+
+layer {
+  bottom: "norm5"
   top: "pool4"
   name: "pool4"
   type: "Pooling"
@@ -376,6 +437,7 @@ layer {
   bottom: "fc1"
   top: "fc1"
 }
+
 layer {
   name: "drop1"
   type: "Dropout"
