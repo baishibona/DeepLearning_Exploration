@@ -9,7 +9,7 @@ display: 50
 max_iter: 450000
 momentum: 0.9
 weight_decay: 0.0005
-snapshot: 10000
+snapshot: 100000
 snapshot_prefix: "data/exploration/caffemodels/localNet/AlexLocal"
 solver_mode: GPU
 
