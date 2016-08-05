@@ -1,5 +1,5 @@
-net: "models/rfal_explo_local/train_val.prototxt"
-test_iter: 48
+net: "DeepLearning_Exploration/models/localNet/train_val.prototxt"
+test_iter: 14
 test_interval: 100
 base_lr: 0.001
 lr_policy: "step"
@@ -10,6 +10,6 @@ max_iter: 450000
 momentum: 0.9
 weight_decay: 0.0005
 snapshot: 10000
-snapshot_prefix: "examples/explo_imagenet/rfal_explo_local_1"
+snapshot_prefix: "data/exploration/caffemodels/localNet/AlexLocal"
 solver_mode: GPU
 
