@@ -352,7 +352,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 36
+    num_output: 360
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -379,4 +379,19 @@ layer {
   bottom: "fc8"
   bottom: "label"
   top: "loss"
+}
+
+layer {
+  name: "pred"
+  type: "Argmax"
+  bottom: "fc8"
+  top: "pred"
+}
+
+layer {
+  name: "error"
+  type: "EuclideanLoss"
+  bottom: "pred"
+  bottom: "label"
+  top: "error"
 }
