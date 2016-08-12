@@ -1,11 +1,11 @@
-EXAMPLE=examples/explo_imagenet
-DATA=data/explo/Dungeon_5663
+EXAMPLE=data/exploration
+DATA=data/exploration/Raw_img/360Degree
 TOOLS=build/tools
 
-TRAIN_DATA_ROOT=~/caffe/data/explo/Dungeon_5663/train_img/
-VAL_DATA_ROOT=~/caffe/data/explo/Dungeon_5663/test_img/
+TRAIN_DATA_ROOT=data/exploration/Raw_img/360Degree/Train_img_5663
+VAL_DATA_ROOT=data/exploration/Raw_img/360Degree/Test_img_5663
 
-RESIZE=true
+RESIZE=false
 if $RESIZE; then
   RESIZE_HEIGHT=256
   RESIZE_WIDTH=256
@@ -22,7 +22,7 @@ GLOG_logtostderr=1 $TOOLS/convert_imageset \
     --shuffle \
     --gray \
     $TRAIN_DATA_ROOT/ \
-    $DATA/dungeon_train.txt \
+    $DATA/Train_img_5663.txt \
     $EXAMPLE/explo_train_lmdb
 
 
@@ -33,8 +33,8 @@ GLOG_logtostderr=1 $TOOLS/convert_imageset \
     --resize_width=$RESIZE_WIDTH \
     --shuffle \
     --gray \
-    $VAL_DATA_ROOT \
-    $DATA/dungeon_test.txt \
+    $VAL_DATA_ROOT/ \
+    $DATA/Test_img_5663.txt \
     $EXAMPLE/explo_val_lmdb
 
 echo "Done."
