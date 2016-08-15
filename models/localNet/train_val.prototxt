@@ -292,9 +292,9 @@ layer {
   }
 }
 layer {
-  name: "loss"
+  name: "error"
   type: "EuclideanLoss"
   bottom: "fc8"
   bottom: "label"
-  top: "loss"
+  top: "loss-e"
 }
