@@ -1,9 +1,9 @@
 EXAMPLE=data/exploration
-DATA=data/exploration/Raw_img/360Degree
+DATA=data/exploration/Raw_img/Dungeon_11224
 TOOLS=build/tools
 
-TRAIN_DATA_ROOT=data/exploration/Raw_img/360Degree/Train_img_5663
-VAL_DATA_ROOT=data/exploration/Raw_img/360Degree/Test_img_5663
+TRAIN_DATA_ROOT=data/exploration/Raw_img/Dungeon_11224/train_img
+VAL_DATA_ROOT=data/exploration/Raw_img/Dungeon_11224/test_img
 
 RESIZE=false
 if $RESIZE; then
@@ -22,7 +22,7 @@ GLOG_logtostderr=1 $TOOLS/convert_imageset \
     --shuffle \
     --gray \
     $TRAIN_DATA_ROOT/ \
-    $DATA/Train_img_5663.txt \
+    $DATA/dungeon_train.txt \
     $EXAMPLE/explo_train_lmdb
 
 
@@ -34,7 +34,7 @@ GLOG_logtostderr=1 $TOOLS/convert_imageset \
     --shuffle \
     --gray \
     $VAL_DATA_ROOT/ \
-    $DATA/Test_img_5663.txt \
+    $DATA/dungeon_test.txt \
     $EXAMPLE/explo_val_lmdb
 
 echo "Done."
