@@ -29,7 +29,7 @@ layer {
   }
   data_param {
     source: "data/exploration/explo_val_lmdb"
-    batch_size: 512
+    batch_size: 550
     backend: LMDB
   }
 }
@@ -74,7 +74,7 @@ layer {
   bottom: "pool1"
   top: "conv2"
 local_param {
-    num_output: 8
+    num_output: 16
     kernel_size: 5
     stride: 2
     weight_filler {

@@ -29,7 +29,7 @@ layer {
   }
   data_param {
     source: "data/exploration/explo_val_lmdb"
-    batch_size: 472
+    batch_size: 2
     backend: LMDB
   }
 }
@@ -382,21 +382,23 @@ layer {
 }
 
 layer {
-  name: "pred"
+  name: "loss-pred"
   type: "ArgMax"
   bottom: "fc8"
-  top: "pred"
+  top: "loss-pred"
   include {
     phase: TEST
   }
 }
 
+
+
 layer {
   name: "error-avg"
   type: "EuclideanLoss"
-  bottom: "pred"
+  bottom: "loss-pred"
   bottom: "label"
-  top: "error"
+  top: "error-whatunit"
   include {
     phase: TEST
   }
