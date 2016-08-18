@@ -12,7 +12,7 @@ layer {
   }
   data_param {
     source: "examples/explo_imagenet/explo_train_lmdb"
-    batch_size: 16
+    batch_size: 32
     backend: LMDB
   }
 }
@@ -29,7 +29,7 @@ layer {
   }
   data_param {
     source: "examples/explo_imagenet/explo_val_lmdb"
-    batch_size: 128
+    batch_size: 512
     backend: LMDB
   }
 }
@@ -256,4 +256,25 @@ layer {
   bottom: "fc8"
   bottom: "label"
   top: "loss"
+}
+
+layer {
+  name: "pred"
+  type: "ArgMax"
+  bottom: "fc8"
+  top: "pred"
+  include {
+    phase: TEST
+  }
+}
+
+layer {
+  name: "error"
+  type: "EuclideanLoss"
+  bottom: "pred"
+  bottom: "label"
+  top: "error"
+  include {
+    phase: TEST
+  }
 }
