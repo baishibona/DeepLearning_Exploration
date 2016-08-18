@@ -381,23 +381,23 @@ layer {
   top: "loss"
 }
 
-# layer {
-#   name: "pred"
-#   type: "ArgMax"
-#   bottom: "fc8"
-#   top: "pred"
-#   include {
-#     phase: TEST
-#   }
-# }
+layer {
+  name: "pred"
+  type: "ArgMax"
+  bottom: "fc8"
+  top: "pred"
+  include {
+    phase: TEST
+  }
+}
 
-# layer {
-#   name: "error"
-#   type: "EuclideanLoss"
-#   bottom: "fc8"
-#   bottom: "label"
-#   top: "error"
-#   include {
-#     phase: TEST
-#   }
-# }
+layer {
+  name: "error-avg"
+  type: "EuclideanLoss"
+  bottom: "pred"
+  bottom: "label"
+  top: "error"
+  include {
+    phase: TEST
+  }
+}
