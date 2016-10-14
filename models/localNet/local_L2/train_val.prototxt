@@ -250,34 +250,34 @@ layer {
     phase: TEST
   }
 }
-# layer {
-#   name: "loss"
-#   type: "SoftmaxWithLoss"
-#   bottom: "fc8"
-#   bottom: "label"
-#   top: "loss"
-# }
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "fc8"
+  bottom: "label"
+  top: "loss"
+}
 
 layer {
   name: "pred"
-  type: "Softmax"
+  type: "ArgMax"
   bottom: "fc8"
   top: "pred"
-  # include {
-  #   phase: TEST
-  # }
+  include {
+    phase: TEST
+  }
 }
 
-# layer {
-#   name: "error"
-#   type: "EuclideanLoss"
-#   bottom: "pred"
-#   bottom: "label"
-#   top: "error"
-#   include {
-#     phase: TEST
-#   }
-# }
+layer {
+  name: "error"
+  type: "EuclideanLoss"
+  bottom: "pred"
+  bottom: "label"
+  top: "error"
+  include {
+    phase: TEST
+  }
+}
 
 # L2 Norm
 layer {

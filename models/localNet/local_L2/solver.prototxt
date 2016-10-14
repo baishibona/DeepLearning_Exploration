@@ -9,6 +9,6 @@ display: 50
 max_iter: 450000
 momentum: 0.9
 weight_decay: 0.0005
-snapshot: 50000
-snapshot_prefix: "data/exploration/caffemodels/localNet/local_L2Norm"
+snapshot: 10000
+snapshot_prefix: "data/exploration/caffemodels/localNet/local_short"
 solver_mode: GPU
