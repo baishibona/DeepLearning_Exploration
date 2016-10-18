@@ -1,7 +1,7 @@
 net: "DeepLearning_Exploration/models/localNet/train_val.prototxt"
-test_iter: 5
+test_iter: 7
 test_interval: 100
-base_lr: 0.001
+base_lr: 0.0001
 lr_policy: "step"
 gamma: 0.5
 stepsize: 50000
@@ -9,6 +9,6 @@ display: 50
 max_iter: 450000
 momentum: 0.9
 weight_decay: 0.0005
-snapshot: 50000
-snapshot_prefix: "data/exploration/caffemodels/localNet/local_L2Norm"
+snapshot: 10000
+snapshot_prefix: "data/exploration/caffemodels/localNet/local_woNoise_reg"
 solver_mode: GPU

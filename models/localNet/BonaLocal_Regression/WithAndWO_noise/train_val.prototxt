@@ -12,7 +12,7 @@ layer {
   }
   data_param {
     source: "data/exploration/explo_train_lmdb"
-    batch_size: 16
+    batch_size: 64
     backend: LMDB
   }
 }
@@ -29,7 +29,7 @@ layer {
   }
   data_param {
     source: "data/exploration/explo_val_lmdb"
-    batch_size: 550
+    batch_size: 1000
     backend: LMDB
   }
 }
@@ -229,7 +229,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 36
+    num_output: 1
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -258,35 +258,23 @@ layer {
 #   top: "loss"
 # }
 
-layer {
-  name: "pred"
-  type: "Softmax"
-  bottom: "fc8"
-  top: "pred"
-  # include {
-  #   phase: TEST
-  # }
-}
-
 # layer {
-#   name: "error"
-#   type: "EuclideanLoss"
-#   bottom: "pred"
-#   bottom: "label"
-#   top: "error"
+#   name: "pred"
+#   type: "ArgMax"
+#   bottom: "fc8"
+#   top: "pred"
 #   include {
 #     phase: TEST
 #   }
 # }
 
-# L2 Norm
 layer {
-  name: "loss"
-  type: "HingeLoss"
-  bottom: "pred"
+  name: "error"
+  type: "EuclideanLoss"
+  bottom: "fc8"
   bottom: "label"
-  top: "loss"
-  hinge_loss_param {
-    norm: L2
-  }
+  top: "error"
+  # include {
+  #   phase: TEST
+  # }
 }
