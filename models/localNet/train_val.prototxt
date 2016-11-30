@@ -56,6 +56,17 @@ layer {
   bottom: "conv1"
   top: "conv1"
 }
+# layer {
+#   name: "norm1"
+#   type: "LRN"
+#   bottom: "conv1"
+#   top: "norm1"
+#   lrn_param {
+#     local_size: 5
+#     alpha: 0.0001
+#     beta: 0.75
+#   }
+# }
 layer {
   name: "pool1"
   type: "Pooling"
@@ -74,9 +85,10 @@ layer {
   bottom: "pool1"
   top: "conv2"
 local_param {
-    num_output: 16
-    kernel_size: 5
+    num_output: 32
+    pad: 2
     stride: 2
+    kernel_size: 5
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -89,6 +101,17 @@ layer {
   bottom: "conv2"
   top: "conv2"
 }
+# layer {
+#   name: "norm2"
+#   type: "LRN"
+#   bottom: "conv2"
+#   top: "norm2"
+#   lrn_param {
+#     local_size: 5
+#     alpha: 0.0001
+#     beta: 0.75
+#   }
+# }
 layer {
   name: "pool2"
   type: "Pooling"
@@ -100,31 +123,19 @@ layer {
     stride: 2
   }
 }
-
+# layer 3
 layer {
   name: "conv3"
-  type: "Convolution"
+  type: "Local"
   bottom: "pool2"
   top: "conv3"
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
-  convolution_param {
-    num_output: 64
-    pad: 1
-    kernel_size: 3
+local_param {
+    num_output: 32
+    kernel_size: 5
+    stride: 2
     weight_filler {
       type: "gaussian"
       std: 0.01
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
   }
 }
@@ -134,11 +145,78 @@ layer {
   bottom: "conv3"
   top: "conv3"
 }
+# layer {
+#   name: "norm3"
+#   type: "LRN"
+#   bottom: "conv3"
+#   top: "norm3"
+#   lrn_param {
+#     local_size: 5
+#     alpha: 0.0001
+#     beta: 0.75
+#   }
+# }
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "conv3"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+
+# layer 4
+# layer {
+#   name: "conv4"
+#   type: "Local"
+#   bottom: "pool3"
+#   top: "conv4"
+# local_param {
+#     num_output: 64
+#     kernel_size: 5
+#     stride: 2
+#     weight_filler {
+#       type: "gaussian"
+#       std: 0.01
+#     }
+#   }
+# }
+# layer {
+#   name: "relu4"
+#   type: "ReLU"
+#   bottom: "conv4"
+#   top: "conv4"
+# }
+# # layer {
+# #   name: "norm4"
+# #   type: "LRN"
+# #   bottom: "conv4"
+# #   top: "norm4"
+# #   lrn_param {
+# #     local_size: 5
+# #     alpha: 0.0001
+# #     beta: 0.75
+# #   }
+# # }
+# layer {
+#   name: "pool4"
+#   type: "Pooling"
+#   bottom: "conv4"
+#   top: "pool4"
+#   pooling_param {
+#     pool: MAX
+#     kernel_size: 3
+#     stride: 2
+#   }
+# }
 
 layer {
   name: "fc6"
   type: "InnerProduct"
-  bottom: "conv3"
+  bottom: "pool3"
   top: "fc6"
   param {
     lr_mult: 1
@@ -149,7 +227,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 512
+    num_output: 256
     weight_filler {
       type: "gaussian"
       std: 0.005
@@ -189,7 +267,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 512
+    num_output: 256
     weight_filler {
       type: "gaussian"
       std: 0.005
@@ -268,18 +346,7 @@ layer {
   # }
 }
 
-# layer {
-#   name: "error"
-#   type: "EuclideanLoss"
-#   bottom: "pred"
-#   bottom: "label"
-#   top: "error"
-#   include {
-#     phase: TEST
-#   }
-# }
-
-# L2 Norm
+# L2 Norm loss
 layer {
   name: "loss"
   type: "HingeLoss"
@@ -288,5 +355,25 @@ layer {
   top: "loss"
   hinge_loss_param {
     norm: L2
+  }
+}
+
+layer {
+  name: "pred1"
+  type: "ArgMax"
+  bottom: "fc8"
+  top: "pred1"
+  include {
+    phase: TEST
+  }
+}
+layer {
+  name: "error"
+  type: "EuclideanLoss"
+  bottom: "label"
+  bottom: "pred1"
+  top: "loss_euc"
+  include {
+    phase: TEST
   }
 }
