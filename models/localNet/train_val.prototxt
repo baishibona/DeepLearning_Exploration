@@ -40,17 +40,10 @@ layer {
   bottom: "data"
   top: "conv1"
 convolution_param {
-<<<<<<< HEAD
     num_output: 128
     pad: 4
     stride: 3
     kernel_size: 9
-=======
-    num_output: 32
-    pad: 2
-    stride: 5
-    kernel_size: 11
->>>>>>> 62308432e6f9aadf50af8a938e16a16a228c018e
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -128,11 +121,7 @@ layer {
   bottom: "pool2"
   top: "conv3"
 convolution_param {
-<<<<<<< HEAD
     num_output: 64
-=======
-    num_output: 32
->>>>>>> 62308432e6f9aadf50af8a938e16a16a228c018e
     kernel_size: 5
     stride: 2
     pad: 2
