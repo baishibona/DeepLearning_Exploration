@@ -40,10 +40,17 @@ layer {
   bottom: "data"
   top: "conv1"
 convolution_param {
+<<<<<<< HEAD
     num_output: 128
     pad: 4
     stride: 3
     kernel_size: 9
+=======
+    num_output: 32
+    pad: 2
+    stride: 5
+    kernel_size: 11
+>>>>>>> 62308432e6f9aadf50af8a938e16a16a228c018e
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -56,17 +63,8 @@ layer {
   bottom: "conv1"
   top: "conv1"
 }
-# layer {
-#   name: "norm1"
-#   type: "LRN"
-#   bottom: "conv1"
-#   top: "norm1"
-#   lrn_param {
-#     local_size: 5
-#     alpha: 0.0001
-#     beta: 0.75
-#   }
-# }
+
+
 layer {
   name: "pool1"
   type: "Pooling"
@@ -85,7 +83,7 @@ layer {
   bottom: "pool1"
   top: "conv2"
 local_param {
-    num_output: 32
+    num_output: 16
     pad: 2
     stride: 2
     kernel_size: 5
@@ -119,7 +117,7 @@ layer {
   top: "pool2"
   pooling_param {
     pool: MAX
-    kernel_size: 3
+    kernel_size: 2
     stride: 2
   }
 }
@@ -130,7 +128,11 @@ layer {
   bottom: "pool2"
   top: "conv3"
 convolution_param {
+<<<<<<< HEAD
     num_output: 64
+=======
+    num_output: 32
+>>>>>>> 62308432e6f9aadf50af8a938e16a16a228c018e
     kernel_size: 5
     stride: 2
     pad: 2
@@ -140,23 +142,14 @@ convolution_param {
     }
   }
 }
+
 layer {
   name: "relu3"
   type: "ReLU"
   bottom: "conv3"
   top: "conv3"
 }
-# layer {
-#   name: "norm3"
-#   type: "LRN"
-#   bottom: "conv3"
-#   top: "norm3"
-#   lrn_param {
-#     local_size: 5
-#     alpha: 0.0001
-#     beta: 0.75
-#   }
-# }
+
 layer {
   name: "pool3"
   type: "Pooling"
@@ -164,7 +157,7 @@ layer {
   top: "pool3"
   pooling_param {
     pool: MAX
-    kernel_size: 3
+    kernel_size: 2
     stride: 2
   }
 }
