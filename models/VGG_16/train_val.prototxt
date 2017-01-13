@@ -12,7 +12,7 @@ layer {
   }
   data_param {
     source: "data/exploration/explo_train_lmdb"
-    batch_size: 2
+    batch_size: 16
     backend: LMDB
   }
 }
@@ -29,7 +29,7 @@ layer {
   }
   data_param {
     source: "data/exploration/explo_val_lmdb"
-    batch_size: 550
+    batch_size: 55
     backend: LMDB
   }
 }
@@ -469,7 +469,7 @@ layer {
   bottom: "fc7"
   top: "fc8"
   inner_product_param {
-    num_output: 2
+    num_output: 36
     weight_filler {
       type: "xavier"
     }
