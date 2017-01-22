@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 ./build/tools/caffe train \
-    --solver=DeepLearning_Exploration/models/localNet/solver.prototxt > localNetTrainLog.txt
+    --solver=DeepLearning_Exploration/models/localNet/AlexLocal/solver.prototxt

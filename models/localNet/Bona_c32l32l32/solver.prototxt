@@ -1,14 +1,14 @@
 net: "DeepLearning_Exploration/models/localNet/train_val.prototxt"
 test_iter: 72
 test_interval: 500
-base_lr: 0.01
+base_lr: 0.001
 lr_policy: "step"
-gamma: 0.1
+gamma: 0.9
 stepsize: 10000
 display: 50
 max_iter: 450000
 momentum: 0.9
 weight_decay: 0.0005
 snapshot: 10000
-snapshot_prefix: "data/exploration/caffemodels/localNet/BonaLocal_l32c64c96_"
+snapshot_prefix: "data/exploration/caffemodels/localNet/BonaLocal_c32l32l32_"
 solver_mode: GPU

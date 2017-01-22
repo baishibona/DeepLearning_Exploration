@@ -1,4 +1,4 @@
-name: "RfalExplo_local"
+name: "Bona_Explo_local_C32L32L32"
 layer {
   name: "data"
   type: "Data"
@@ -7,12 +7,9 @@ layer {
   include {
     phase: TRAIN
   }
-  # transform_param {
-  #   mean_file: "data/exploration/explo_mean.binaryproto"
-  # }
   data_param {
     source: "data/exploration/explo_train_lmdb"
-    batch_size: 128
+    batch_size: 256
     backend: LMDB
   }
 }
@@ -24,26 +21,23 @@ layer {
   include {
     phase: TEST
   }
-  # transform_param {
-  #   mean_file: "data/exploration/explo_mean.binaryproto"
-  # }
   data_param {
     source: "data/exploration/explo_val_lmdb"
-    batch_size: 512
+    batch_size: 256
     backend: LMDB
   }
 }
 
 layer {
   name: "conv1"
-  type: "Convolution"
+  type: "Local"
   bottom: "data"
   top: "conv1"
-convolution_param {
-    num_output: 128
+local_param {
+    num_output: 32
     pad: 4
-    stride: 3
-    kernel_size: 9
+    stride: 4
+    kernel_size: 11
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -57,11 +51,22 @@ layer {
   top: "conv1"
 }
 
+layer {
+  name: "norm1"
+  type: "LRN"
+  bottom: "conv1"
+  top: "norm1"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
 
 layer {
   name: "pool1"
   type: "Pooling"
-  bottom: "conv1"
+  bottom: "norm1"
   top: "pool1"
   pooling_param {
     pool: MAX
@@ -72,14 +77,14 @@ layer {
 
 layer {
   name: "conv2"
-  type: "Local"
+  type: "Convolution"
   bottom: "pool1"
   top: "conv2"
-local_param {
-    num_output: 16
-    pad: 2
-    stride: 2
+convolution_param {
+    num_output: 64
     kernel_size: 5
+    stride: 2
+    pad: 2
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -92,21 +97,23 @@ layer {
   bottom: "conv2"
   top: "conv2"
 }
-# layer {
-#   name: "norm2"
-#   type: "LRN"
-#   bottom: "conv2"
-#   top: "norm2"
-#   lrn_param {
-#     local_size: 5
-#     alpha: 0.0001
-#     beta: 0.75
-#   }
-# }
+
+layer {
+  name: "norm2"
+  type: "LRN"
+  bottom: "conv2"
+  top: "norm2"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+
 layer {
   name: "pool2"
   type: "Pooling"
-  bottom: "conv2"
+  bottom: "norm2"
   top: "pool2"
   pooling_param {
     pool: MAX
@@ -114,17 +121,17 @@ layer {
     stride: 2
   }
 }
-# layer 3
+
 layer {
   name: "conv3"
   type: "Convolution"
   bottom: "pool2"
   top: "conv3"
 convolution_param {
-    num_output: 64
-    kernel_size: 5
-    stride: 2
-    pad: 2
+    num_output: 96
+    kernel_size: 3
+    stride: 1
+    pad: 1
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -140,9 +147,21 @@ layer {
 }
 
 layer {
+  name: "norm3"
+  type: "LRN"
+  bottom: "conv3"
+  top: "norm3"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+
+layer {
   name: "pool3"
   type: "Pooling"
-  bottom: "conv3"
+  bottom: "norm3"
   top: "pool3"
   pooling_param {
     pool: MAX
@@ -150,51 +169,6 @@ layer {
     stride: 2
   }
 }
-
-# layer 4
-# layer {
-#   name: "conv4"
-#   type: "Local"
-#   bottom: "pool3"
-#   top: "conv4"
-# local_param {
-#     num_output: 64
-#     kernel_size: 5
-#     stride: 2
-#     weight_filler {
-#       type: "gaussian"
-#       std: 0.01
-#     }
-#   }
-# }
-# layer {
-#   name: "relu4"
-#   type: "ReLU"
-#   bottom: "conv4"
-#   top: "conv4"
-# }
-# # layer {
-# #   name: "norm4"
-# #   type: "LRN"
-# #   bottom: "conv4"
-# #   top: "norm4"
-# #   lrn_param {
-# #     local_size: 5
-# #     alpha: 0.0001
-# #     beta: 0.75
-# #   }
-# # }
-# layer {
-#   name: "pool4"
-#   type: "Pooling"
-#   bottom: "conv4"
-#   top: "pool4"
-#   pooling_param {
-#     pool: MAX
-#     kernel_size: 3
-#     stride: 2
-#   }
-# }
 
 layer {
   name: "fc6"
@@ -318,6 +292,7 @@ layer {
 #   bottom: "label"
 #   top: "loss"
 # }
+
 
 layer {
   name: "pred"
