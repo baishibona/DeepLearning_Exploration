@@ -7,9 +7,9 @@ layer {
   include {
     phase: TRAIN
   }
-  transform_param {
-    mean_file: "data/exploration/explo_mean.binaryproto"
-  }
+  # transform_param {
+  #   mean_file: "data/exploration/explo_mean.binaryproto"
+  # }
   data_param {
     source: "data/exploration/explo_train_lmdb"
     batch_size: 128
@@ -24,9 +24,9 @@ layer {
   include {
     phase: TEST
   }
-  transform_param {
-    mean_file: "data/exploration/explo_mean.binaryproto"
-  }
+  # transform_param {
+  #   mean_file: "data/exploration/explo_mean.binaryproto"
+  # }
   data_param {
     source: "data/exploration/explo_val_lmdb"
     batch_size: 512
@@ -382,21 +382,23 @@ layer {
 }
 
 layer {
-  name: "pred"
+  name: "loss-pred"
   type: "ArgMax"
   bottom: "fc8"
-  top: "pred"
+  top: "loss-pred"
   include {
     phase: TEST
   }
 }
 
+
+
 layer {
   name: "error-avg"
   type: "EuclideanLoss"
-  bottom: "pred"
+  bottom: "loss-pred"
   bottom: "label"
-  top: "error"
+  top: "error-whatunit"
   include {
     phase: TEST
   }

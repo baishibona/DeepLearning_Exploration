@@ -29,7 +29,7 @@ layer {
   # }
   data_param {
     source: "data/exploration/explo_val_lmdb"
-    batch_size: 512
+    batch_size: 128
     backend: LMDB
   }
 }
@@ -37,7 +37,7 @@ layer {
 
 layer {
   name: "conv1"
-  type: "Convolution"
+  type: "Local"
   bottom: "data"
   top: "conv1"
   param {
@@ -48,7 +48,7 @@ layer {
     lr_mult: 2
     decay_mult: 0
   }
-  convolution_param {
+  local_param {
     num_output: 96
     kernel_size: 11
     stride: 4
@@ -147,7 +147,7 @@ layer {
 }
 layer {
   name: "conv3"
-  type: "Local"
+  type: "Convolution"
   bottom: "pool2"
   top: "conv3"
   param {
@@ -158,7 +158,7 @@ layer {
     lr_mult: 2
     decay_mult: 0
   }
-  local_param {
+  convolution_param {
     num_output: 384
     pad: 1
     kernel_size: 3
@@ -269,7 +269,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 512
+    num_output: 4096
     weight_filler {
       type: "gaussian"
       std: 0.005
@@ -309,7 +309,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 512
+    num_output: 4096
     weight_filler {
       type: "gaussian"
       std: 0.005
@@ -372,32 +372,43 @@ layer {
   }
 }
 
-# layer {
-#   name: "loss"
-#   type: "SoftmaxWithLoss"
-#   bottom: "fc8"
-#   bottom: "label"
-#   top: "loss"
-# }
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "fc8"
+  bottom: "label"
+  top: "loss"
+}
 
 layer {
   name: "pred"
-  type: "Softmax"
+  type: "ArgMax"
   bottom: "fc8"
   top: "pred"
-  # include {
-  #   phase: TEST
-  # }
+  include {
+    phase: TEST
+  }
+}
+
+layer {
+  name: "error-avg"
+  type: "EuclideanLoss"
+  bottom: "pred"
+  bottom: "label"
+  top: "error-whatunit"
+  include {
+    phase: TEST
+  }
 }
 
 # L2 Norm loss
-layer {
-  name: "loss"
-  type: "HingeLoss"
-  bottom: "pred"
-  bottom: "label"
-  top: "loss"
-  hinge_loss_param {
-    norm: L2
-  }
-}
+# layer {
+#   name: "loss"
+#   type: "HingeLoss"
+#   bottom: "pred"
+#   bottom: "label"
+#   top: "loss"
+#   hinge_loss_param {
+#     norm: L2
+#   }
+# }

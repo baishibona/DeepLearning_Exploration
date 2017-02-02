@@ -8,12 +8,12 @@ layer {
   include {
     phase: TRAIN
   }
-  transform_param {
-    mean_file: "data/exploration/explo_mean.binaryproto"
-  }
+  # transform_param {
+  #   mean_file: "data/exploration/explo_mean.binaryproto"
+  # }
   data_param {
     source: "data/exploration/explo_train_lmdb"
-    batch_size: 1
+    batch_size: 16
     backend: LMDB
   }
 }
@@ -25,12 +25,12 @@ layer {
   include {
     phase: TEST
   }
-  transform_param {
-    mean_file: "data/exploration/explo_mean.binaryproto"
-  }
+  # transform_param {
+  #   mean_file: "data/exploration/explo_mean.binaryproto"
+  # }
   data_param {
     source: "data/exploration/explo_val_lmdb"
-    batch_size: 512
+    batch_size: 64
     backend: LMDB
   }
 }

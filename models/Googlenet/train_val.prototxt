@@ -7,12 +7,12 @@ layer {
   include {
     phase: TRAIN
   }
-  transform_param {
-    mean_file: "data/exploration/explo_mean.binaryproto"
-  }
+  # transform_param {
+  #   mean_file: "data/exploration/explo_mean.binaryproto"
+  # }
   data_param {
     source: "data/exploration/explo_train_lmdb"
-    batch_size: 16
+    batch_size: 64
     backend: LMDB
   }
 }
@@ -24,12 +24,12 @@ layer {
   include {
     phase: TEST
   }
-  transform_param {
-    mean_file: "data/exploration/explo_mean.binaryproto"
-  }
+  # transform_param {
+  #   mean_file: "data/exploration/explo_mean.binaryproto"
+  # }
   data_param {
     source: "data/exploration/explo_val_lmdb"
-    batch_size: 512
+    batch_size: 32
     backend: LMDB
   }
 }
@@ -907,7 +907,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 1000
+    num_output: 36
     weight_filler {
       type: "xavier"
     }
@@ -1670,7 +1670,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 1000
+    num_output: 36
     weight_filler {
       type: "xavier"
     }
@@ -2393,34 +2393,75 @@ layer {
     }
   }
 }
+# layer {
+#   name: "loss3/loss3"
+#   type: "SoftmaxWithLoss"
+#   bottom: "loss3/classifier"
+#   bottom: "label"
+#   top: "loss3/loss3"
+#   loss_weight: 1
+# }
+# layer {
+#   name: "loss3/top-1"
+#   type: "Accuracy"
+#   bottom: "loss3/classifier"
+#   bottom: "label"
+#   top: "loss3/top-1"
+#   include {
+#     phase: TEST
+#   }
+# }
+# layer {
+#   name: "loss3/top-5"
+#   type: "Accuracy"
+#   bottom: "loss3/classifier"
+#   bottom: "label"
+#   top: "loss3/top-5"
+#   include {
+#     phase: TEST
+#   }
+#   accuracy_param {
+#     top_k: 5
+#   }
+# }
+
+
 layer {
-  name: "loss3/loss3"
+  name: "accuracy"
+  type: "Accuracy"
+  bottom: "loss3/classifier"
+  bottom: "label"
+  top: "accuracy"
+  include {
+    phase: TEST
+  }
+}
+
+layer {
+  name: "loss3/top-1"
   type: "SoftmaxWithLoss"
   bottom: "loss3/classifier"
   bottom: "label"
-  top: "loss3/loss3"
-  loss_weight: 1
+  top: "loss"
 }
+
 layer {
-  name: "loss3/top-1"
-  type: "Accuracy"
+  name: "pred"
+  type: "ArgMax"
   bottom: "loss3/classifier"
-  bottom: "label"
-  top: "loss3/top-1"
+  top: "pred"
   include {
     phase: TEST
   }
 }
+
 layer {
-  name: "loss3/top-5"
-  type: "Accuracy"
-  bottom: "loss3/classifier"
+  name: "error-avg"
+  type: "EuclideanLoss"
+  bottom: "pred"
   bottom: "label"
-  top: "loss3/top-5"
+  top: "error-whatunit"
   include {
     phase: TEST
-  }
-  accuracy_param {
-    top_k: 5
   }
 }
